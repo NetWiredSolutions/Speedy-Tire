@@ -3,135 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speedy Tire | Premium Wheel & Tire Gallery</title>
+    <title>Speedy Tire | Premium New & Pre-Owned Tires</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .luxury-serif { font-family: 'Cormorant Garamond', serif; }
-        .hero-gradient {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
-                        url('https://images.unsplash.com/photo-1549110660-801a6354735c?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover;
-            background-position: center;
-        }
+        :root { --accent: #dc2626; }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; }
+        .luxury-font { font-family: 'Playfair Display', serif; }
+        .tire-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tire-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .filter-btn.active { background-color: var(--accent); border-color: var(--accent); color: white; }
     </style>
 </head>
-<body class="bg-[#0f0f0f] text-white">
+<body>
 
-    <nav class="flex justify-between items-center px-10 py-8 border-b border-white/10 sticky top-0 bg-[#0f0f0f]/90 backdrop-blur-md z-50">
-        <div class="text-2xl font-black tracking-widest uppercase">
-            Speedy <span class="text-red-600 italic">Tire</span>
-        </div>
-        <div class="hidden md:flex space-x-12 text-xs font-bold tracking-[0.2em] uppercase text-gray-400">
-            <a href="#" class="hover:text-white transition">The Inventory</a>
-            <a href="#" class="hover:text-white transition">Bespoke Services</a>
-            <a href="#" class="hover:text-white transition">Visit Shop</a>
-        </div>
-        <div class="flex items-center space-x-6">
-            <button class="border border-white/20 px-6 py-2 text-[10px] tracking-[0.2em] uppercase hover:bg-white hover:text-black transition">Inquiry</button>
+    <nav class="flex justify-between items-center px-8 py-6 sticky top-0 bg-black/90 backdrop-blur-md z-50 border-b border-white/5">
+        <div class="text-2xl font-black tracking-tighter italic">SPEEDY <span class="text-red-600">TIRE</span></div>
+        <div class="hidden md:flex space-x-8 text-[10px] tracking-[0.3em] uppercase font-bold text-gray-400">
+            <a href="#inventory" class="hover:text-white transition">Inventory</a>
+            <a href="#about" class="hover:text-white transition">The Shop</a>
+            <a href="tel:7272234224" class="text-white underline decoration-red-600 underline-offset-4">(727) 223-4224</a>
         </div>
     </nav>
 
-    <header class="hero-gradient h-[80vh] flex flex-col justify-center items-center text-center px-4">
-        <h2 class="text-gray-400 uppercase tracking-[0.5em] text-sm mb-4">Precision. Performance. Pinellas.</h2>
-        <h1 class="luxury-serif text-5xl md:text-8xl mb-8">Elevated Performance.</h1>
-        <div class="flex flex-col md:flex-row gap-4">
-            <button class="bg-white text-black px-10 py-4 font-bold uppercase text-xs tracking-widest hover:bg-red-600 hover:text-white transition">View New Arrivals</button>
-            <button class="bg-transparent border border-white/30 text-white px-10 py-4 font-bold uppercase text-xs tracking-widest hover:border-white transition">Browse Certified Pre-Owned</button>
+    <header class="relative h-[80vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1549110660-801a6354735c?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover opacity-40 grayscale">
+        </div>
+        <div class="relative z-10 text-center px-4">
+            <h2 class="text-red-600 font-bold tracking-[0.5em] uppercase text-xs mb-4">Clearwater, Florida</h2>
+            <h1 class="luxury-font text-6xl md:text-8xl italic mb-8">Performance & <br>Precision.</h1>
+            <p class="text-gray-400 max-w-lg mx-auto mb-10 font-light leading-relaxed">Pinellas County's 5-star destination for luxury rubber. From factory-new performance to certified pre-owned sets.</p>
+            <a href="#inventory" class="bg-white text-black px-12 py-4 font-bold uppercase text-[10px] tracking-[0.3em] hover:bg-red-600 hover:text-white transition">View Collection</a>
         </div>
     </header>
 
-    <section class="py-24 px-10 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row justify-between items-baseline mb-16 gap-4">
+    <section id="inventory" class="py-24 px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
             <div>
-                <h3 class="luxury-serif text-4xl mb-2">Curated Collection</h3>
-                <p class="text-gray-500 max-w-md italic">A rigorous 40-point inspection on every pre-owned tire. Factory-fresh performance on all new arrivals.</p>
+                <h3 class="luxury-font text-5xl mb-4 italic">Current Gallery</h3>
+                <p class="text-gray-500 uppercase tracking-widest text-[10px]">Showing all available stock</p>
             </div>
-            <div class="flex gap-4">
-                <select class="bg-transparent border-b border-white/20 py-2 text-xs uppercase tracking-widest focus:outline-none">
-                    <option class="bg-black">All Sizes</option>
-                    <option class="bg-black">18" Diameter</option>
-                    <option class="bg-black">19" Diameter</option>
-                    <option class="bg-black">20" Diameter+</option>
-                </select>
-                <select class="bg-transparent border-b border-white/20 py-2 text-xs uppercase tracking-widest focus:outline-none">
-                    <option class="bg-black">Condition</option>
-                    <option class="bg-black">Brand New</option>
-                    <option class="bg-black">Certified Pre-Owned</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
             
-            <div class="group cursor-pointer">
-                <div class="bg-[#1a1a1a] aspect-square flex items-center justify-center overflow-hidden mb-6 relative">
-                    <img src="https://images.unsplash.com/photo-1578844541663-b7395eaf8854?auto=format&fit=crop&q=80&w=800" class="grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100" alt="Tire">
-                    <div class="absolute top-4 left-4 bg-white text-black px-3 py-1 text-[10px] font-bold uppercase">Pre-Owned (90% Tread)</div>
+            <div id="filter-container" class="flex flex-wrap gap-3">
+                <button class="filter-btn active border border-white/20 px-6 py-2 text-[10px] uppercase tracking-widest transition" onclick="filterTires('all', this)">All</button>
+                <button class="filter-btn border border-white/20 px-6 py-2 text-[10px] uppercase tracking-widest transition" onclick="filterTires('new', this)">Brand New</button>
+                <button class="filter-btn border border-white/20 px-6 py-2 text-[10px] uppercase tracking-widest transition" onclick="filterTires('used', this)">Pre-Owned</button>
+            </div>
+        </div>
+
+        <div id="tire-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            
+            <div class="tire-card border border-white/5 bg-zinc-900/30 p-6" data-type="new">
+                <div class="relative aspect-square mb-6 overflow-hidden bg-zinc-800">
+                    <img src="https://images.unsplash.com/photo-1578844541663-b7395eaf8854?w=600" class="w-full h-full object-cover opacity-70 grayscale hover:grayscale-0 transition duration-700">
+                    <span class="absolute top-4 left-4 bg-red-600 text-white text-[9px] font-bold px-3 py-1 uppercase italic">Factory New</span>
                 </div>
-                <h4 class="text-lg font-bold mb-1">Michelin Latitude Sport 3</h4>
-                <p class="text-gray-500 text-sm tracking-widest mb-4">255 / 45 / R20</p>
-                <div class="flex justify-between items-center border-t border-white/10 pt-4">
-                    <span class="text-xl font-light">$125.00</span>
-                    <button class="text-xs uppercase tracking-widest border-b border-red-600 pb-1 hover:text-red-500 transition">Reserve Now</button>
+                <h4 class="text-xl font-bold mb-1 italic">Michelin Pilot Sport 4S</h4>
+                <p class="text-gray-500 text-xs tracking-widest mb-6 uppercase">245 / 40 / ZR19</p>
+                <div class="flex justify-between items-center pt-6 border-t border-white/10">
+                    <span class="text-2xl font-light">$289.00</span>
+                    <a href="tel:7272234224" class="bg-white text-black px-6 py-2 text-[9px] font-black uppercase tracking-widest">Call to Claim</a>
                 </div>
             </div>
 
-            <div class="group cursor-pointer">
-                <div class="bg-[#1a1a1a] aspect-square flex items-center justify-center overflow-hidden mb-6 relative border border-red-900/30">
-                    <img src="https://images.unsplash.com/photo-1635840638012-78d10b77741d?auto=format&fit=crop&q=80&w=800" class="grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100" alt="Tire">
-                    <div class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 text-[10px] font-bold uppercase italic">Factory New</div>
+            <div class="tire-card border border-white/5 bg-zinc-900/30 p-6" data-type="used">
+                <div class="relative aspect-square mb-6 overflow-hidden bg-zinc-800">
+                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600" class="w-full h-full object-cover opacity-70 grayscale hover:grayscale-0 transition duration-700">
+                    <span class="absolute top-4 left-4 bg-zinc-100 text-black text-[9px] font-bold px-3 py-1 uppercase tracking-widest">85% Tread Left</span>
                 </div>
-                <h4 class="text-lg font-bold mb-1">Pirelli P Zero High Performance</h4>
-                <p class="text-gray-500 text-sm tracking-widest mb-4">245 / 35 / ZR19</p>
-                <div class="flex justify-between items-center border-t border-white/10 pt-4">
-                    <span class="text-xl font-light">$312.00</span>
-                    <button class="text-xs uppercase tracking-widest border-b border-red-600 pb-1 hover:text-red-500 transition">Reserve Now</button>
+                <h4 class="text-xl font-bold mb-1 italic">Pirelli P Zero</h4>
+                <p class="text-gray-500 text-xs tracking-widest mb-6 uppercase">275 / 35 / R20</p>
+                <div class="flex justify-between items-center pt-6 border-t border-white/10">
+                    <span class="text-2xl font-light">$145.00</span>
+                    <a href="tel:7272234224" class="bg-white text-black px-6 py-2 text-[9px] font-black uppercase tracking-widest">Call to Claim</a>
                 </div>
             </div>
 
-            <div class="group cursor-pointer">
-                <div class="bg-[#1a1a1a] aspect-square flex items-center justify-center overflow-hidden mb-6 relative">
-                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=800" class="grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100" alt="Tire">
-                    <div class="absolute top-4 left-4 bg-white text-black px-3 py-1 text-[10px] font-bold uppercase">Pre-Owned (85% Tread)</div>
+            <div class="tire-card border border-white/5 bg-zinc-900/30 p-6" data-type="used">
+                <div class="relative aspect-square mb-6 overflow-hidden bg-zinc-800">
+                    <img src="https://images.unsplash.com/photo-1551522435-a13afa10f103?w=600" class="w-full h-full object-cover opacity-70 grayscale hover:grayscale-0 transition duration-700">
+                    <span class="absolute top-4 left-4 bg-zinc-100 text-black text-[9px] font-bold px-3 py-1 uppercase tracking-widest">90% Tread Left</span>
                 </div>
-                <h4 class="text-lg font-bold mb-1">Continental ExtremeContact</h4>
-                <p class="text-gray-500 text-sm tracking-widest mb-4">225 / 40 / R18</p>
-                <div class="flex justify-between items-center border-t border-white/10 pt-4">
-                    <span class="text-xl font-light">$89.00</span>
-                    <button class="text-xs uppercase tracking-widest border-b border-red-600 pb-1 hover:text-red-500 transition">Reserve Now</button>
+                <h4 class="text-xl font-bold mb-1 italic">Continental ExtremeContact</h4>
+                <p class="text-gray-500 text-xs tracking-widest mb-6 uppercase">225 / 45 / R18</p>
+                <div class="flex justify-between items-center pt-6 border-t border-white/10">
+                    <span class="text-2xl font-light">$95.00</span>
+                    <a href="tel:7272234224" class="bg-white text-black px-6 py-2 text-[9px] font-black uppercase tracking-widest">Call to Claim</a>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <section class="bg-zinc-950 py-20 px-10 border-t border-white/5">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+    <section id="about" class="bg-zinc-950 py-24 px-8 border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="bg-zinc-900 h-[450px] relative">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3522.618683141147!2d-82.7291414!3d28.0194843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2ee03e7c845eb%3A0xc9c7333d4f138e6e!2s29712%20US%20Hwy%2019%20N%20%23408%2C%20Clearwater%2C%20FL%2033761!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg);" allowfullscreen="" loading="lazy"></iframe>
+            </div>
             <div>
-                <h2 class="luxury-serif text-5xl mb-6">Experience Speedy Tire.</h2>
-                <p class="text-gray-400 mb-8 leading-relaxed">Located within the Tropicana Mini Storage complex in Clearwater, our boutique shop offers more than just tires. We offer a 5-star standard of automotive care for the Pinellas County community.</p>
-                <div class="space-y-4 text-sm tracking-wide">
-                    <div class="flex gap-4">
-                        <span class="text-red-600 font-bold uppercase">Address:</span>
-                        <span>29712 US Hwy 19 N #408, Clearwater, FL</span>
-                    </div>
-                    <div class="flex gap-4">
-                        <span class="text-red-600 font-bold uppercase">Contact:</span>
-                        <span>(727) 223-4224</span>
-                    </div>
-                    <div class="flex gap-4">
-                        <span class="text-red-600 font-bold uppercase">Mon - Sat:</span>
-                        <span>8:30 AM — 6:00 PM</span>
-                    </div>
+                <h2 class="luxury-font text-5xl mb-6 italic">Visit Speedy Tire.</h2>
+                <p class="text-gray-400 leading-relaxed mb-8">Located in the Tropicana Mini Storage complex. We provide elite wheel and tire services for the Clearwater community. Experience our 5.0-star certified service.</p>
+                <div class="space-y-4">
+                    <p class="flex justify-between border-b border-white/10 pb-2"><span class="text-red-600 font-bold uppercase text-[10px]">Location</span> 29712 US Hwy 19 N #408</p>
+                    <p class="flex justify-between border-b border-white/10 pb-2"><span class="text-red-600 font-bold uppercase text-[10px]">Hours</span> Mon-Sat: 8:30 AM - 6:00 PM</p>
+                    <p class="flex justify-between border-b border-white/10 pb-2"><span class="text-red-600 font-bold uppercase text-[10px]">Reviews</span> 5.0 ★ (263 Reviews)</p>
                 </div>
-            </div>
-            <div class="bg-zinc-900 h-[400px] border border-white/10 flex items-center justify-center italic text-gray-600">
-                [ Interactive Google Map Embed ]
             </div>
         </div>
     </section>
+
+    <footer class="py-12 text-center text-[10px] tracking-[0.5em] text-gray-600 uppercase">
+        &copy; 2024 Speedy Tire Clearwater. All Rights Reserved.
+    </footer>
+
+    <script>
+        function filterTires(type, btn) {
+            // Update buttons
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Filter grid
+            const items = document.querySelectorAll('.tire-card');
+            items.forEach(item => {
+                if (type === 'all' || item.getAttribute('data-type') === type) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
