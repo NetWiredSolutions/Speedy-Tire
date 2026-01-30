@@ -1,845 +1,233 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Speedy Tire | New & Used Tires • Free Mount + Balance + Install</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-    [x-cloak] { display:none !important; }
-    :root{
-      --brand:#111827;     /* slate-900 */
-      --accent:#dc2626;    /* red-600 */
-      --muted:#6b7280;     /* gray-500 */
-      --bg:#0b0f17;        /* deep navy */
-    }
-    html, body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    body { background: radial-gradient(1200px 800px at 20% -10%, rgba(220,38,38,0.10), transparent 55%),
-                         radial-gradient(900px 700px at 90% 10%, rgba(255,255,255,0.06), transparent 60%),
-                         linear-gradient(180deg, #070a10 0%, #090c13 40%, #070a10 100%);
-           color:#fff; }
-    .glass { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(12px); }
-    .soft { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); }
-    .ring-focus:focus { outline: none; box-shadow: 0 0 0 3px rgba(220,38,38,0.35); border-color: rgba(220,38,38,0.55); }
-    .shadow-premium { box-shadow: 0 24px 60px rgba(0,0,0,0.55); }
-    .btn { transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease; }
-    .btn:active { transform: translateY(1px); }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speedy Tire | Premium Clearwater Tire Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <style>
+        [x-cloak] { display: none !important; }
+        :root { --accent: #dc2626; }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #fff; scroll-behavior: smooth; }
+        .font-automotive { font-family: 'Syncopate', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .tire-gradient { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%); }
+        input:focus { outline: none; border-color: var(--accent); }
+    </style>
 </head>
+<body x-data="tireStore()">
 
-<body class="min-h-full" x-data="speedyTire()" x-init="init()">
-
-  <!-- Mobile bottom bar -->
-  <div class="fixed bottom-0 left-0 right-0 z-[70] md:hidden">
-    <div class="mx-auto max-w-7xl px-3 pb-3">
-      <div class="grid grid-cols-2 overflow-hidden rounded-2xl border border-white/10 bg-black/60 backdrop-blur">
-        <a href="tel:7272234224" class="py-4 text-center text-xs font-extrabold tracking-widest uppercase hover:bg-white/5">Call Now</a>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=29712+US+Hwy+19+N+%23408+Clearwater+FL+33761"
-           class="py-4 text-center text-xs font-extrabold tracking-widest uppercase bg-red-600 hover:bg-red-700">Directions</a>
-      </div>
+    <div class="fixed bottom-0 left-0 right-0 z-[100] grid grid-cols-2 md:hidden border-t border-white/10">
+        <a href="tel:7272234224" class="bg-zinc-900 py-4 text-center text-[10px] font-bold tracking-widest uppercase border-r border-white/5">Call Now</a>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=29712+US+Hwy+19+N+Clearwater+FL" class="bg-red-600 py-4 text-center text-[10px] font-bold tracking-widest uppercase">Directions</a>
     </div>
-  </div>
 
-  <!-- Top ribbon -->
-  <div class="hidden md:block border-b border-white/10 bg-black/40 backdrop-blur">
-    <div class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between text-[11px] text-white/70">
-      <div class="flex items-center gap-3">
-        <span class="inline-flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
-          <span class="font-semibold">Open Today</span>
-          <span class="text-white/50">Mon–Sat 8:30 AM – 6:00 PM</span>
-        </span>
-      </div>
-      <div class="flex items-center gap-5">
-        <a class="hover:text-white" href="tel:7272234224">(727) 223-4224</a>
-        <a class="hover:text-white" href="#reviews">5.0 ★ (263 reviews)</a>
-        <a class="hover:text-white" href="#contact">29712 US Hwy 19 N #408, Clearwater</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <header class="sticky top-0 z-[80] border-b border-white/10 bg-black/65 backdrop-blur">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
-      <a href="#top" class="flex items-center gap-3">
-        <div class="h-10 w-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
-          <span class="font-black tracking-tight">ST</span>
+    <nav class="flex justify-between items-center px-6 py-8 border-b border-white/5 sticky top-0 bg-black/95 z-50">
+        <div class="flex items-center space-x-2">
+            <span class="font-automotive text-xl tracking-tighter italic uppercase">Speedy <span class="text-red-600">Tire</span></span>
         </div>
-        <div class="leading-tight">
-          <div class="text-sm font-extrabold tracking-tight">Speedy Tire</div>
-          <div class="text-[11px] text-white/60">New & Used Tires • Clearwater, FL</div>
+        <div class="hidden lg:flex space-x-10 text-[10px] font-bold tracking-[0.4em] uppercase text-gray-400">
+            <a href="#inventory" class="hover:text-red-500 transition">Inventory</a>
+            <a href="#services" class="hover:text-red-500 transition">Services</a>
+            <a href="#reviews" class="hover:text-red-500 transition">Reviews</a>
+            <a href="#contact" class="hover:text-red-500 transition">Location</a>
         </div>
-      </a>
+        <div class="flex items-center gap-4">
+            <span class="hidden sm:block text-[10px] font-bold text-red-600">(727) 223-4224</span>
+            <button class="bg-white text-black px-6 py-2 text-[10px] font-bold uppercase tracking-widest hover:bg-red-600 hover:text-white transition">Admin</button>
+        </div>
+    </nav>
 
-      <nav class="hidden lg:flex items-center gap-8 text-[12px] font-semibold text-white/70">
-        <a href="#inventory" class="hover:text-white">Inventory</a>
-        <a href="#services" class="hover:text-white">Services</a>
-        <a href="#reviews" class="hover:text-white">Reviews</a>
-        <a href="#contact" class="hover:text-white">Location</a>
-      </nav>
-
-      <div class="flex items-center gap-3">
-        <button class="hidden sm:inline-flex btn items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-xs font-extrabold tracking-widest uppercase hover:bg-white/10"
-                @click="openRequest()">
-          Request a Size
-        </button>
-
-        <button class="btn inline-flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 text-xs font-extrabold tracking-widest uppercase hover:bg-red-700"
-                @click="scrollToInventory()">
-          Shop Inventory
-        </button>
-
-        <button class="hidden md:inline-flex btn items-center gap-2 rounded-xl border border-white/15 bg-white px-4 py-2 text-xs font-extrabold tracking-widest uppercase text-black hover:bg-red-600 hover:text-white"
-                @click="openAdmin()">
-          Admin
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Hero -->
-  <main id="top">
-    <section class="relative overflow-hidden">
-      <div class="absolute inset-0">
-        <img src="https://images.unsplash.com/photo-1551522435-a13afa10f103?auto=format&fit=crop&q=80&w=2400"
-             alt="Tire wall"
-             class="h-full w-full object-cover opacity-20">
-        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black"></div>
-      </div>
-
-      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div class="lg:col-span-7">
-            <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-bold tracking-widest uppercase text-white/80">
-              <span class="h-2 w-2 rounded-full bg-red-500"></span>
-              Free mount, balance & install with purchase
+    <section class="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1551522435-a13afa10f103?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover opacity-30 grayscale">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>
+        </div>
+        
+        <div class="relative z-10 text-center max-w-5xl">
+            <div class="inline-block border border-red-600/30 px-4 py-1 mb-6 rounded-full">
+                <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-red-500">Free Mount, Balance & Install Included</span>
             </div>
-
-            <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05]">
-              Premium New & Certified Used Tires
-              <span class="block text-white/70 font-extrabold">for Clearwater drivers.</span>
+            <h1 class="font-automotive text-5xl md:text-8xl mb-8 leading-tight tracking-tighter uppercase italic">
+                New & Used <br> <span class="text-red-600">Tire Gallery</span>
             </h1>
-
-            <p class="mt-6 text-base sm:text-lg text-white/70 leading-relaxed max-w-2xl">
-              Shop by size, brand, and condition. Reserve online, confirm availability fast, and get expert mounting, balancing, and installation included with your tire purchase.
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+                Premium performance meets local trust. Pinellas County's highest-rated tire shop specializing in hard-to-find sizes and factory fresh rubber.
             </p>
-
-            <div class="mt-8 flex flex-col sm:flex-row gap-3">
-              <button class="btn rounded-2xl bg-red-600 px-6 py-4 text-xs font-extrabold tracking-widest uppercase hover:bg-red-700 shadow-premium"
-                      @click="scrollToInventory()">
-                Browse Inventory
-              </button>
-
-              <a class="btn rounded-2xl border border-white/15 bg-white/5 px-6 py-4 text-xs font-extrabold tracking-widest uppercase hover:bg-white/10"
-                 href="tel:7272234224">
-                Call (727) 223-4224
-              </a>
-
-              <a class="btn rounded-2xl border border-white/15 bg-white px-6 py-4 text-xs font-extrabold tracking-widest uppercase text-black hover:bg-red-600 hover:text-white"
-                 href="https://www.google.com/maps/dir/?api=1&destination=29712+US+Hwy+19+N+%23408+Clearwater+FL+33761">
-                Get Directions
-              </a>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#inventory" class="bg-red-600 hover:bg-red-700 text-white px-12 py-5 font-black uppercase text-xs tracking-widest transition-all shadow-[0_0_30px_rgba(220,38,38,0.3)]">Shop Inventory</a>
+                <a href="#contact" class="glass text-white px-12 py-5 font-black uppercase text-xs tracking-widest hover:bg-white hover:text-black transition-all">Get Directions</a>
             </div>
-
-            <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div class="soft rounded-2xl p-4">
-                <div class="text-2xl font-black">5.0<span class="text-white/60 text-sm">★</span></div>
-                <div class="text-[11px] font-semibold text-white/60 mt-1">Google rating</div>
-              </div>
-              <div class="soft rounded-2xl p-4">
-                <div class="text-2xl font-black">263+</div>
-                <div class="text-[11px] font-semibold text-white/60 mt-1">Verified reviews</div>
-              </div>
-              <div class="soft rounded-2xl p-4">
-                <div class="text-2xl font-black">Same-day</div>
-                <div class="text-[11px] font-semibold text-white/60 mt-1">Service</div>
-              </div>
-              <div class="soft rounded-2xl p-4">
-                <div class="text-2xl font-black">Hard-to-find</div>
-                <div class="text-[11px] font-semibold text-white/60 mt-1">Sizes</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="lg:col-span-5">
-            <div class="glass rounded-3xl p-5 sm:p-6 shadow-premium">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <div class="text-xs font-extrabold tracking-widest uppercase text-white/70">Quick Search</div>
-                  <div class="mt-2 text-xl font-black tracking-tight">Find your size in seconds</div>
-                  <div class="mt-2 text-sm text-white/65">Type a size like <span class="font-semibold">275/40R20</span> or brand like <span class="font-semibold">Michelin</span>.</div>
-                </div>
-                <div class="hidden sm:block rounded-2xl bg-red-600/15 border border-red-500/20 px-3 py-2 text-[10px] font-extrabold tracking-widest uppercase text-red-300">
-                  Live
-                </div>
-              </div>
-
-              <div class="mt-6 grid grid-cols-1 gap-3">
-                <input x-model="search"
-                       class="ring-focus w-full rounded-2xl bg-black/40 border border-white/15 px-5 py-4 text-sm font-semibold tracking-tight placeholder:text-white/40"
-                       placeholder="Search size or brand (e.g., 275/40R20, Pirelli)" />
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <select x-model="filter.condition" class="ring-focus w-full rounded-2xl bg-black/40 border border-white/15 px-4 py-4 text-sm font-semibold">
-                    <option value="all">All</option>
-                    <option value="new">New</option>
-                    <option value="used">Used</option>
-                  </select>
-
-                  <select x-model="filter.brand" class="ring-focus w-full rounded-2xl bg-black/40 border border-white/15 px-4 py-4 text-sm font-semibold">
-                    <option value="all">All brands</option>
-                    <template x-for="b in brands" :key="b">
-                      <option :value="b" x-text="b"></option>
-                    </template>
-                  </select>
-
-                  <select x-model="sortBy" class="ring-focus w-full rounded-2xl bg-black/40 border border-white/15 px-4 py-4 text-sm font-semibold">
-                    <option value="relevance">Sort: Relevance</option>
-                    <option value="price_asc">Price: Low → High</option>
-                    <option value="price_desc">Price: High → Low</option>
-                    <option value="tread_desc">Tread: High → Low</option>
-                  </select>
-                </div>
-
-                <div class="flex flex-wrap gap-2 pt-1">
-                  <template x-for="tag in quickTags" :key="tag">
-                    <button class="btn rounded-full border border-white/15 bg-white/5 px-3 py-2 text-[11px] font-bold text-white/75 hover:bg-white/10"
-                            @click="applyQuickTag(tag)"
-                            x-text="tag">
-                    </button>
-                  </template>
-                </div>
-
-                <div class="pt-3 flex items-center justify-between text-xs text-white/60">
-                  <div><span class="font-bold text-white" x-text="filteredTires.length"></span> results</div>
-                  <button class="btn font-extrabold tracking-widest uppercase text-[11px] text-red-300 hover:text-red-200"
-                          @click="resetFilters()">
-                    Reset
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-4 text-xs text-white/50">
-              Address: <span class="text-white/70">29712 US Hwy 19 N #408, Clearwater, FL 33761</span> • Located inside Tropicana Mini Storage
-            </div>
-          </div>
         </div>
-      </div>
     </section>
 
-    <!-- Inventory -->
-    <section id="inventory" class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
-      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
-        <div>
-          <div class="text-xs font-extrabold tracking-widest uppercase text-white/60">Inventory</div>
-          <h2 class="mt-2 text-3xl sm:text-4xl font-black tracking-tight">Shop tires available now</h2>
-          <p class="mt-3 text-white/60 max-w-2xl">
-            Every listing includes condition, size, pricing, and service notes. Free mount, balance, and install included with tire purchase.
-          </p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-          <button class="btn rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-xs font-extrabold tracking-widest uppercase hover:bg-white/10"
-                  @click="toggleGrid()"
-                  x-text="ui.compact ? 'Comfort View' : 'Compact View'">
-          </button>
-          <button class="btn rounded-2xl bg-red-600 px-5 py-3 text-xs font-extrabold tracking-widest uppercase hover:bg-red-700"
-                  @click="openRequest()">
-            Request a Tire Size
-          </button>
-        </div>
-      </div>
-
-      <!-- Active filter chips -->
-      <div class="mt-8 flex flex-wrap items-center gap-2 text-[11px]" x-show="hasActiveFilters()" x-cloak>
-        <span class="text-white/60 font-semibold mr-1">Active filters:</span>
-
-        <template x-if="search.trim().length">
-          <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2">
-            <span class="text-white/70 font-bold">Search:</span>
-            <span class="font-semibold" x-text="search"></span>
-            <button class="text-white/60 hover:text-white" @click="search=''">✕</button>
-          </span>
-        </template>
-
-        <template x-if="filter.condition !== 'all'">
-          <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2">
-            <span class="text-white/70 font-bold">Condition:</span>
-            <span class="font-semibold" x-text="filter.condition"></span>
-            <button class="text-white/60 hover:text-white" @click="filter.condition='all'">✕</button>
-          </span>
-        </template>
-
-        <template x-if="filter.brand !== 'all'">
-          <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2">
-            <span class="text-white/70 font-bold">Brand:</span>
-            <span class="font-semibold" x-text="filter.brand"></span>
-            <button class="text-white/60 hover:text-white" @click="filter.brand='all'">✕</button>
-          </span>
-        </template>
-
-        <template x-if="filter.width || filter.rim">
-          <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2">
-            <span class="text-white/70 font-bold">Size:</span>
-            <span class="font-semibold">
-              <span x-text="filter.width ? filter.width : '—'"></span> /
-              <span x-text="filter.aspect ? filter.aspect : '—'"></span>
-              <span x-text="filter.rim ? 'R' + filter.rim : ''"></span>
-            </span>
-            <button class="text-white/60 hover:text-white" @click="filter.width=''; filter.aspect=''; filter.rim=''">✕</button>
-          </span>
-        </template>
-
-        <button class="btn rounded-full border border-red-500/20 bg-red-600/10 px-3 py-2 font-extrabold tracking-widest uppercase text-[10px] text-red-200 hover:bg-red-600/15"
-                @click="resetFilters()">
-          Clear all
-        </button>
-      </div>
-
-      <!-- Size filter row -->
-      <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <input x-model="filter.width" inputmode="numeric"
-               class="ring-focus w-full rounded-2xl bg-black/35 border border-white/15 px-5 py-4 text-sm font-semibold placeholder:text-white/35"
-               placeholder="Width (e.g., 275)" />
-
-        <input x-model="filter.aspect" inputmode="numeric"
-               class="ring-focus w-full rounded-2xl bg-black/35 border border-white/15 px-5 py-4 text-sm font-semibold placeholder:text-white/35"
-               placeholder="Aspect (e.g., 40)" />
-
-        <input x-model="filter.rim" inputmode="numeric"
-               class="ring-focus w-full rounded-2xl bg-black/35 border border-white/15 px-5 py-4 text-sm font-semibold placeholder:text-white/35"
-               placeholder="Rim (e.g., 20)" />
-      </div>
-
-      <!-- Results -->
-      <div class="mt-10">
-        <template x-if="filteredTires.length === 0">
-          <div class="glass rounded-3xl p-10 text-center">
-            <div class="text-xl font-black">No matches</div>
-            <div class="mt-2 text-white/60">Try a different size, brand, or clear filters.</div>
-            <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-              <button class="btn rounded-2xl bg-red-600 px-6 py-4 text-xs font-extrabold tracking-widest uppercase hover:bg-red-700"
-                      @click="openRequest()">
-                Request your size
-              </button>
-              <button class="btn rounded-2xl border border-white/15 bg-white/5 px-6 py-4 text-xs font-extrabold tracking-widest uppercase hover:bg-white/10"
-                      @click="resetFilters()">
-                Clear filters
-              </button>
+    <div class="border-y border-white/5 bg-zinc-900/20 py-10">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-2xl font-black mb-1">5.0 ★</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Google Rating</div>
             </div>
-          </div>
-        </template>
-
-        <div class="grid gap-6"
-             :class="ui.compact ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'">
-
-          <template x-for="tire in filteredTires" :key="tire.id">
-            <article class="group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] hover:border-white/20 transition shadow-premium">
-              <div class="relative aspect-[4/3] overflow-hidden bg-black/30">
-                <img :src="tire.image" :alt="tire.brand + ' ' + tire.size"
-                     class="h-full w-full object-cover opacity-90 group-hover:scale-[1.03] transition duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-
-                <div class="absolute top-4 left-4 flex items-center gap-2">
-                  <span class="rounded-full px-3 py-1 text-[11px] font-extrabold tracking-widest uppercase"
-                        :class="tire.condition === 'new' ? 'bg-red-600 text-white' : 'bg-white text-black'">
-                    <span x-text="tire.condition === 'new' ? 'New' : 'Used'"></span>
-                  </span>
-
-                  <template x-if="tire.treadPct !== null">
-                    <span class="rounded-full border border-white/15 bg-black/40 px-3 py-1 text-[11px] font-bold text-white/85">
-                      <span x-text="tire.treadPct + '% tread'"></span>
-                    </span>
-                  </template>
-                </div>
-
-                <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
-                  <div class="text-sm font-extrabold tracking-tight">
-                    <span x-text="tire.size"></span>
-                    <div class="text-[11px] font-semibold text-white/65" x-text="tire.category"></div>
-                  </div>
-                  <div class="text-right">
-                    <div class="text-lg font-black" x-text="formatPrice(tire.price)"></div>
-                    <div class="text-[11px] font-extrabold tracking-widest uppercase text-red-200">Free install</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="p-5 sm:p-6">
-                <div class="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 class="text-lg font-black tracking-tight" x-text="tire.brand"></h3>
-                    <p class="text-sm text-white/60 mt-1" x-text="tire.model"></p>
-                  </div>
-
-                  <div class="hidden sm:flex flex-col items-end text-[11px] text-white/60">
-                    <div class="font-semibold" x-text="'Qty: ' + tire.qty"></div>
-                    <div class="font-semibold" x-text="tire.inStock ? 'In stock' : 'Call to confirm'"></div>
-                  </div>
-                </div>
-
-                <ul class="mt-4 grid grid-cols-2 gap-2 text-[12px] text-white/65">
-                  <li class="rounded-xl border border-white/10 bg-black/20 px-3 py-2">
-                    <span class="text-white/45">Brand</span>
-                    <div class="font-semibold text-white" x-text="tire.brand"></div>
-                  </li>
-                  <li class="rounded-xl border border-white/10 bg-black/20 px-3 py-2">
-                    <span class="text-white/45">Condition</span>
-                    <div class="font-semibold text-white" x-text="tire.condition === 'new' ? 'Factory New' : 'Certified Used'"></div>
-                  </li>
-                  <li class="rounded-xl border border-white/10 bg-black/20 px-3 py-2">
-                    <span class="text-white/45">Speed rating</span>
-                    <div class="font-semibold text-white" x-text="tire.speed"></div>
-                  </li>
-                  <li class="rounded-xl border border-white/10 bg-black/20 px-3 py-2">
-                    <span class="text-white/45">Warranty</span>
-                    <div class="font-semibold text-white" x-text="tire.warranty"></div>
-                  </li>
-                </ul>
-
-                <div class="mt-5 flex gap-3">
-                  <button class="btn w-full rounded-2xl bg-white px-4 py-3 text-xs font-extrabold tracking-widest uppercase text-black hover:bg-red-600 hover:text-white"
-                          @click="openDetails(tire)">
-                    View Details
-                  </button>
-                  <button class="btn rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-xs font-extrabold tracking-widest uppercase hover:bg-white/10"
-                          @click="quickReserve(tire)">
-                    Reserve
-                  </button>
-                </div>
-
-                <div class="mt-3 text-[11px] text-white/55">
-                  Includes mount + balance + install with purchase. Call to confirm exact availability.
-                </div>
-              </div>
-            </article>
-          </template>
+            <div class="text-center">
+                <div class="text-2xl font-black mb-1">263+</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Verified Reviews</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-black mb-1 italic uppercase">Fast</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Same Day Service</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-black mb-1 italic uppercase">Local</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Clearwater Owned</div>
+            </div>
         </div>
-      </div>
+    </div>
+
+    <section id="inventory" class="py-32 px-6 max-w-[1400px] mx-auto">
+        <div class="flex flex-col lg:flex-row justify-between items-baseline mb-20 gap-8">
+            <div>
+                <h2 class="font-automotive text-4xl italic mb-4 uppercase">Live Inventory</h2>
+                <p class="text-gray-500 text-sm tracking-widest uppercase">Inventory updated as of Jan 2026</p>
+            </div>
+            
+            <div class="flex flex-wrap gap-4 w-full lg:w-auto">
+                <div class="relative w-full sm:w-64">
+                    <input type="text" x-model="search" placeholder="Search Size (e.g. 275/40/20)" class="w-full bg-zinc-900 border border-white/10 px-6 py-4 text-xs font-bold uppercase tracking-widest rounded-none">
+                </div>
+                <select x-model="filterCondition" class="bg-zinc-900 border border-white/10 px-6 py-4 text-xs font-bold uppercase tracking-widest rounded-none appearance-none">
+                    <option value="all">All Conditions</option>
+                    <option value="new">Brand New</option>
+                    <option value="used">Used (Certified)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+            <template x-for="tire in filteredTires" :key="tire.id">
+                <div class="glass group relative overflow-hidden transition-all duration-500 hover:border-red-600/50">
+                    <div class="aspect-[4/5] relative overflow-hidden bg-zinc-800">
+                        <img :src="tire.image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700 opacity-60 group-hover:opacity-100">
+                        <div class="absolute inset-0 tire-gradient"></div>
+                        
+                        <div class="absolute top-6 left-6 flex flex-col gap-2">
+                            <span :class="tire.condition === 'new' ? 'bg-red-600' : 'bg-white text-black'" 
+                                  class="px-3 py-1 text-[9px] font-black uppercase tracking-widest" 
+                                  x-text="tire.condition === 'new' ? 'Factory New' : 'Certified Used'"></span>
+                            <template x-if="tire.tread">
+                                <span class="bg-black/80 text-white px-3 py-1 text-[9px] font-bold border border-white/10" x-text="tire.tread"></span>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="p-8">
+                        <h3 class="text-xl font-black italic uppercase mb-1" x-text="tire.brand"></h3>
+                        <p class="text-gray-500 text-[11px] tracking-[0.3em] uppercase mb-6" x-text="tire.size"></p>
+                        
+                        <div class="flex flex-col gap-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-2xl font-light" x-text="'$' + tire.price"></span>
+                                <span class="text-[9px] font-bold text-red-500 uppercase tracking-widest">Free Install</span>
+                            </div>
+                            <button @click="openModal(tire)" class="w-full bg-white text-black py-4 text-[10px] font-black uppercase tracking-widest hover:bg-red-600 hover:text-white transition">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
     </section>
 
-    <!-- Services -->
-    <section id="services" class="border-t border-white/10 bg-black/30">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          <div class="lg:col-span-5">
-            <div class="text-xs font-extrabold tracking-widest uppercase text-white/60">Services</div>
-            <h2 class="mt-2 text-3xl sm:text-4xl font-black tracking-tight">Everything you need, done right.</h2>
-            <p class="mt-4 text-white/60 leading-relaxed">
-              We focus on speed, safety, and clean workmanship. Get the right tire, installed correctly, without the runaround.
-            </p>
-            <div class="mt-6 flex flex-wrap gap-3">
-              <span class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-bold text-white/75">Free Mount</span>
-              <span class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-bold text-white/75">Free Balance</span>
-              <span class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-bold text-white/75">Free Install</span>
-              <span class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-bold text-white/75">Flat Repair</span>
-              <span class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-bold text-white/75">Rotation</span>
-            </div>
-          </div>
-
-          <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div class="glass rounded-3xl p-7">
-              <div class="text-sm font-black">New Tires</div>
-              <div class="mt-2 text-white/60 text-sm leading-relaxed">Factory new options from major brands. Order and install fast.</div>
-            </div>
-            <div class="glass rounded-3xl p-7">
-              <div class="text-sm font-black">Certified Used Tires</div>
-              <div class="mt-2 text-white/60 text-sm leading-relaxed">Quality inspected used tires with clear tread details and honest pricing.</div>
-            </div>
-            <div class="glass rounded-3xl p-7">
-              <div class="text-sm font-black">Hard-to-Find Sizes</div>
-              <div class="mt-2 text-white/60 text-sm leading-relaxed">If you’re struggling to find your size, we’ll help source it quickly.</div>
-            </div>
-            <div class="glass rounded-3xl p-7">
-              <div class="text-sm font-black">Fast Turnaround</div>
-              <div class="mt-2 text-white/60 text-sm leading-relaxed">Simple, efficient workflow so you’re back on the road ASAP.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Reviews -->
-    <section id="reviews" class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
-        <div>
-          <div class="text-xs font-extrabold tracking-widest uppercase text-white/60">Reviews</div>
-          <h2 class="mt-2 text-3xl sm:text-4xl font-black tracking-tight">5-star local trust.</h2>
-          <p class="mt-3 text-white/60">263+ reviews • Rated 5.0 on Google</p>
-        </div>
-
-        <div class="flex gap-3">
-          <a href="https://www.google.com/search?q=Speedy+Tire+Clearwater+reviews"
-             class="btn rounded-2xl bg-white px-5 py-3 text-xs font-extrabold tracking-widest uppercase text-black hover:bg-red-600 hover:text-white">
-            View on Google
-          </a>
-          <a href="https://www.google.com/search?q=Speedy+Tire+Clearwater+write+a+review"
-             class="btn rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-xs font-extrabold tracking-widest uppercase hover:bg-white/10">
-            Write a Review
-          </a>
-        </div>
-      </div>
-
-      <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="glass rounded-3xl p-8">
-          <div class="text-yellow-400 font-black text-lg">★★★★★</div>
-          <p class="mt-4 text-white/70 leading-relaxed italic">
-            “Amazing prices and quality service. Very quick and treated my car with care.”
-          </p>
-          <div class="mt-6 text-xs font-extrabold tracking-widest uppercase">Jennifer Lewis</div>
-        </div>
-
-        <div class="glass rounded-3xl p-8 border-red-500/20 shadow-premium">
-          <div class="text-yellow-400 font-black text-lg">★★★★★</div>
-          <p class="mt-4 text-white/70 leading-relaxed italic">
-            “Great price, quick service, and friendly staff. Highly recommend for new or used.”
-          </p>
-          <div class="mt-6 text-xs font-extrabold tracking-widest uppercase">Conner Goddu</div>
-        </div>
-
-        <div class="glass rounded-3xl p-8">
-          <div class="text-yellow-400 font-black text-lg">★★★★★</div>
-          <p class="mt-4 text-white/70 leading-relaxed italic">
-            “The only place that had my tire size in the entire area. Professional and fast.”
-          </p>
-          <div class="mt-6 text-xs font-extrabold tracking-widest uppercase">JaRon Walters</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="border-t border-white/10 bg-black/35">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-          <div class="glass rounded-3xl p-8 sm:p-10">
-            <div class="text-xs font-extrabold tracking-widest uppercase text-white/60">Location</div>
-            <h2 class="mt-2 text-3xl sm:text-4xl font-black tracking-tight">Visit Speedy Tire</h2>
-            <p class="mt-4 text-white/60 leading-relaxed">
-              29712 US Hwy 19 N #408, Clearwater, FL 33761 <span class="text-white/40">•</span> Inside Tropicana Mini Storage
-            </p>
-
-            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-              <div class="rounded-2xl border border-white/10 bg-black/20 p-5">
-                <div class="text-xs font-extrabold tracking-widest uppercase text-white/60">Hours</div>
-                <div class="mt-3 space-y-1 text-white/75">
-                  <div class="flex justify-between"><span class="text-white/55">Mon–Sat</span><span class="font-semibold">8:30 AM – 6:00 PM</span></div>
-                  <div class="flex justify-between"><span class="text-white/55">Sunday</span><span class="font-extrabold text-red-200">Closed</span></div>
+    <section id="contact" class="bg-zinc-950 py-32 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
+            <div>
+                <h2 class="font-automotive text-5xl italic mb-10 leading-tight">Visit the <br> <span class="text-red-600">Headquarters.</span></h2>
+                <div class="space-y-8">
+                    <div class="flex items-start gap-6">
+                        <div class="w-12 h-12 glass flex items-center justify-center text-red-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-2 font-black">Address</p>
+                            <p class="text-lg">29712 US Hwy 19 N #408<br>Clearwater, FL 33761</p>
+                            <p class="text-sm text-red-600 italic mt-2">Located inside Tropicana Mini Storage</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-6">
+                        <div class="w-12 h-12 glass flex items-center justify-center text-red-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-2 font-black">Hours</p>
+                            <div class="grid grid-cols-2 gap-x-8 text-sm">
+                                <span class="text-gray-400">Mon - Sat</span> <span>8:30 AM - 6:00 PM</span>
+                                <span class="text-gray-400">Sunday</span> <span class="text-red-600 uppercase font-black">Closed</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-              <div class="rounded-2xl border border-white/10 bg-black/20 p-5">
-                <div class="text-xs font-extrabold tracking-widest uppercase text-white/60">Contact</div>
-                <div class="mt-3 space-y-2">
-                  <a href="tel:7272234224" class="block font-extrabold hover:text-white">(727) 223-4224</a>
-                  <a href="https://www.google.com/maps/dir/?api=1&destination=29712+US+Hwy+19+N+%23408+Clearwater+FL+33761"
-                     class="inline-flex btn rounded-xl bg-red-600 px-4 py-3 text-xs font-extrabold tracking-widest uppercase hover:bg-red-700">
-                    Directions
-                  </a>
-                </div>
-              </div>
             </div>
-
-            <div class="mt-6 text-xs text-white/50">
-              Tip: Call ahead for specialty sizes or same-day availability.
+            
+            <div class="h-[500px] border border-white/10 grayscale contrast-125 brightness-75 hover:grayscale-0 transition duration-1000">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3521.859664402636!2d-82.72914142379893!3d28.02874131126131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2f1f0d467779f%3A0xe5a3c26759a29e84!2sSpeedy%20Tire!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
-          </div>
-
-          <div class="overflow-hidden rounded-3xl border border-white/10 bg-black/20 shadow-premium">
-            <iframe
-              title="Speedy Tire Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3521.859664402636!2d-82.72914142379893!3d28.02874131126131!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2f1f0d467779f%3A0xe5a3c26759a29e84!2sSpeedy%20Tire!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
-              width="100%" height="520" style="border:0;" allowfullscreen="" loading="lazy">
-            </iframe>
-          </div>
         </div>
-      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="border-t border-white/10">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 text-center">
-        <div class="text-sm font-extrabold tracking-tight">Speedy Tire</div>
-        <div class="mt-2 text-[11px] text-white/55 tracking-widest uppercase">
-          2026 © Clearwater, Florida • New & Used Tires • Free Install With Purchase
+    <section id="reviews" class="py-32 px-6">
+        <h2 class="font-automotive text-3xl text-center italic mb-20 uppercase tracking-tighter">Verified Social Proof</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <div class="glass p-10">
+                <div class="flex text-yellow-500 mb-6 font-bold text-lg">★★★★★</div>
+                <p class="text-gray-400 italic mb-8 leading-relaxed">"The only place that had my tire size in the entire area. Professional and incredibly fast service."</p>
+                <p class="text-xs font-black uppercase tracking-widest">Jennifer Lewis</p>
+            </div>
+            <div class="glass p-10 border-red-600/20 shadow-[0_20px_40px_rgba(220,38,38,0.05)]">
+                <div class="flex text-yellow-500 mb-6 font-bold text-lg">★★★★★</div>
+                <p class="text-gray-400 italic mb-8 leading-relaxed">"Amazing prices and quality service. They treat your car like it's their own. Best used tires in Pinellas."</p>
+                <p class="text-xs font-black uppercase tracking-widest">JaRon Walters</p>
+            </div>
+            <div class="glass p-10">
+                <div class="flex text-yellow-500 mb-6 font-bold text-lg">★★★★★</div>
+                <p class="text-gray-400 italic mb-8 leading-relaxed">"Great price, quick service, and friendly staff. Highly recommend for new or used."</p>
+                <p class="text-xs font-black uppercase tracking-widest">Conner Goddu</p>
+            </div>
         </div>
-      </div>
+    </section>
+
+    <footer class="bg-black py-20 px-6 border-t border-white/5 text-center">
+        <div class="font-automotive text-2xl italic uppercase mb-10">Speedy <span class="text-red-600">Tire</span></div>
+        <p class="text-gray-600 text-[10px] tracking-[0.5em] uppercase">2026 © Clearwater, Florida • 5-Star Certified Boutique Shop</p>
     </footer>
-  </main>
 
-  <!-- Details Modal -->
-  <div x-cloak x-show="modal.open" class="fixed inset-0 z-[120]">
-    <div class="absolute inset-0 bg-black/70" @click="modal.open=false"></div>
-
-    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 h-full flex items-center justify-center">
-      <div class="glass w-full rounded-3xl overflow-hidden shadow-premium border border-white/15">
-        <div class="grid grid-cols-1 md:grid-cols-2">
-          <div class="relative">
-            <img :src="modal.tire?.image" alt="" class="h-full w-full object-cover min-h-[260px]">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"></div>
-            <div class="absolute top-4 left-4 flex gap-2">
-              <span class="rounded-full px-3 py-1 text-[11px] font-extrabold tracking-widest uppercase"
-                    :class="modal.tire?.condition === 'new' ? 'bg-red-600 text-white' : 'bg-white text-black'">
-                <span x-text="modal.tire?.condition === 'new' ? 'New' : 'Used'"></span>
-              </span>
-              <template x-if="modal.tire?.treadPct !== null">
-                <span class="rounded-full border border-white/15 bg-black/40 px-3 py-1 text-[11px] font-bold text-white/85"
-                      x-text="modal.tire?.treadPct + '% tread'"></span>
-              </template>
-            </div>
-          </div>
-
-          <div class="p-7 sm:p-8">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <div class="text-xs font-extrabold tracking-widest uppercase text-white/60">Tire Details</div>
-                <div class="mt-2 text-2xl font-black tracking-tight" x-text="modal.tire?.brand"></div>
-                <div class="mt-1 text-white/60" x-text="modal.tire?.model"></div>
-                <div class="mt-3 text-sm font-extrabold tracking-widest uppercase text-white/70" x-text="modal.tire?.size"></div>
-              </div>
-              <button class="text-white/60 hover:text-white text-xl leading-none" @click="modal.open=false" aria-label="Close">✕</button>
-            </div>
-
-            <div class="mt-6 grid grid-cols-2 gap-3 text-sm">
-              <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
-                <div class="text-[11px] text-white/55 font-extrabold tracking-widest uppercase">Price</div>
-                <div class="mt-1 text-lg font-black" x-text="formatPrice(modal.tire?.price)"></div>
-              </div>
-              <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
-                <div class="text-[11px] text-white/55 font-extrabold tracking-widest uppercase">Qty</div>
-                <div class="mt-1 text-lg font-black" x-text="modal.tire?.qty"></div>
-              </div>
-              <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
-                <div class="text-[11px] text-white/55 font-extrabold tracking-widest uppercase">Speed</div>
-                <div class="mt-1 font-semibold" x-text="modal.tire?.speed"></div>
-              </div>
-              <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
-                <div class="text-[11px] text-white/55 font-extrabold tracking-widest uppercase">Warranty</div>
-                <div class="mt-1 font-semibold" x-text="modal.tire?.warranty"></div>
-              </div>
-            </div>
-
-            <div class="mt-5 text-sm text-white/70 leading-relaxed">
-              <div class="font-semibold">Included with purchase:</div>
-              <ul class="mt-2 list-disc pl-5 space-y-1 text-white/65">
-                <li>Free mount</li>
-                <li>Free balance</li>
-                <li>Free install</li>
-              </ul>
-            </div>
-
-            <div class="mt-7 flex flex-col sm:flex-row gap-3">
-              <a class="btn w-full rounded-2xl bg-red-600 px-6 py-4 text-xs font-extrabold tracking-widest uppercase hover:bg-red-700 text-center"
-                 :href="buildTel(modal.tire)">
-                Call to Confirm
-              </a>
-              <button class="btn w-full rounded-2xl border border-white/15 bg-white px-6 py-4 text-xs font-extrabold tracking-widest uppercase text-black hover:bg-red-600 hover:text-white"
-                      @click="quickReserve(modal.tire); modal.open=false">
-                Reserve This Tire
-              </button>
-            </div>
-
-            <div class="mt-4 text-[11px] text-white/50">
-              Note: Inventory can change quickly. Calling confirms exact availability.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Request Modal -->
-  <div x-cloak x-show="request.open" class="fixed inset-0 z-[130]">
-    <div class="absolute inset-0 bg-black/70" @click="request.open=false"></div>
-
-    <div class="relative max-w-2xl mx-auto px-4 sm:px-6 h-full flex items-center justify-center">
-      <div class="glass w-full rounded-3xl p-7 sm:p-8 border border-white/15 shadow-premium">
-        <div class="flex items-start justify-between gap-4">
-          <div>
-            <div class="text-xs font-extrabold tracking-widest uppercase text-white/60">Request a tire</div>
-            <div class="mt-2 text-2xl font-black tracking-tight">Can’t find your size?</div>
-            <div class="mt-2 text-white/60">Send the size you need and we’ll help you track it down.</div>
-          </div>
-          <button class="text-white/60 hover:text-white text-xl leading-none" @click="request.open=false" aria-label="Close">✕</button>
-        </div>
-
-        <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <input x-model="request.width" class="ring-focus rounded-2xl bg-black/40 border border-white/15 px-4 py-4 text-sm font-semibold placeholder:text-white/35" placeholder="Width (275)" inputmode="numeric">
-          <input x-model="request.aspect" class="ring-focus rounded-2xl bg-black/40 border border-white/15 px-4 py-4 text-sm font-semibold placeholder:text-white/35" placeholder="Aspect (40)" inputmode="numeric">
-          <input x-model="request.rim" class="ring-focus rounded-2xl bg-black/40 border border-white/15 px-4 py-4 text-sm font-semibold placeholder:text-white/35" placeholder="Rim (20)" inputmode="numeric">
-        </div>
-
-        <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <input x-model="request.brand" class="ring-focus rounded-2xl bg-black/40 border border-white/15 px-4 py-4 text-sm font-semibold placeholder:text-white/35" placeholder="Preferred brand (optional)">
-          <select x-model="request.condition" class="ring-focus rounded-2xl bg-black/40 border border-white/15 px-4 py-4 text-sm font-semibold">
-            <option value="either">New or Used</option>
-            <option value="new">New</option>
-            <option value="used">Used</option>
-          </select>
-        </div>
-
-        <textarea x-model="request.notes"
-                  class="ring-focus mt-3 w-full rounded-2xl bg-black/40 border border-white/15 px-4 py-4 text-sm font-semibold placeholder:text-white/35"
-                  rows="3"
-                  placeholder="Any notes (vehicle, urgency, budget, etc.)"></textarea>
-
-        <div class="mt-6 flex flex-col sm:flex-row gap-3">
-          <a class="btn w-full rounded-2xl bg-red-600 px-6 py-4 text-xs font-extrabold tracking-widest uppercase hover:bg-red-700 text-center"
-             :href="buildRequestText()">
-            Text / Call Request
-          </a>
-          <button class="btn w-full rounded-2xl border border-white/15 bg-white px-6 py-4 text-xs font-extrabold tracking-widest uppercase text-black hover:bg-red-600 hover:text-white"
-                  @click="applyRequestedSize(); request.open=false">
-            Apply to Filters
-          </button>
-        </div>
-
-        <div class="mt-4 text-[11px] text-white/50">
-          This demo uses a “call/text request” link. In production, wire this to a form endpoint + CRM.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function speedyTire() {
-      return {
-        // UI
-        ui: { compact: false },
-
-        // Filters
-        search: '',
-        filter: { condition: 'all', brand: 'all', width: '', aspect: '', rim: '' },
-        sortBy: 'relevance',
-
-        // Derived
-        brands: [],
-        quickTags: ['275/40R20', '245/35R19', 'All-Season', 'Performance', 'Truck / SUV', 'Michelin', 'Pirelli'],
-
-        // Modals
-        modal: { open: false, tire: null },
-        request: { open: false, width: '', aspect: '', rim: '', brand: '', condition: 'either', notes: '' },
-
-        // Inventory (demo data — replace with real API/DB)
-        inventory: [
-          { id: 1, brand: 'Michelin', model: 'Pilot Sport 4S', size: '275/40R20', price: 245, condition: 'new', treadPct: null, speed: 'Y', warranty: 'Manufacturer', category: 'Performance', qty: 6, inStock: true, image: 'https://images.unsplash.com/photo-1578844541663-b7395eaf8854?auto=format&fit=crop&w=1400&q=80' },
-          { id: 2, brand: 'Pirelli', model: 'P Zero', size: '245/35R19', price: 110, condition: 'used', treadPct: 90, speed: 'Y', warranty: 'Shop guarantee', category: 'Performance', qty: 2, inStock: true, image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1400&q=80' },
-          { id: 3, brand: 'Continental', model: 'ExtremeContact DWS 06', size: '225/45R18', price: 85, condition: 'used', treadPct: 80, speed: 'W', warranty: 'Shop guarantee', category: 'All-Season', qty: 4, inStock: true, image: 'https://images.unsplash.com/photo-1551522435-a13afa10f103?auto=format&fit=crop&w=1400&q=80' },
-          { id: 4, brand: 'Bridgestone', model: 'Dueler H/L Alenza', size: '255/50R20', price: 189, condition: 'new', treadPct: null, speed: 'H', warranty: 'Manufacturer', category: 'Truck / SUV', qty: 8, inStock: true, image: 'https://images.unsplash.com/photo-1621259182978-f09e5e2ca1ff?auto=format&fit=crop&w=1400&q=80' },
-          { id: 5, brand: 'Yokohama', model: 'ADVAN Sport A/S+', size: '215/55R17', price: 65, condition: 'used', treadPct: 75, speed: 'V', warranty: 'Shop guarantee', category: 'All-Season', qty: 2, inStock: true, image: 'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1400&q=80' },
-          { id: 6, brand: 'Goodyear', model: 'Wrangler All-Terrain Adventure', size: '265/70R17', price: 155, condition: 'new', treadPct: null, speed: 'S', warranty: 'Manufacturer', category: 'Truck / SUV', qty: 6, inStock: true, image: 'https://images.unsplash.com/photo-1597008641621-1b6f3b6e84a6?auto=format&fit=crop&w=1400&q=80' },
-          { id: 7, brand: 'Hankook', model: 'Ventus V12 evo2', size: '235/40R18', price: 95, condition: 'used', treadPct: 90, speed: 'W', warranty: 'Shop guarantee', category: 'Performance', qty: 2, inStock: true, image: 'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1400&q=80' },
-          { id: 8, brand: 'Toyo', model: 'Proxes ST III', size: '285/45R22', price: 299, condition: 'new', treadPct: null, speed: 'V', warranty: 'Manufacturer', category: 'Truck / SUV', qty: 4, inStock: true, image: 'https://images.unsplash.com/photo-1621259182978-f09e5e2ca1ff?auto=format&fit=crop&w=1400&q=80' },
-        ],
-
-        init() {
-          this.brands = [...new Set(this.inventory.map(x => x.brand))].sort();
-        },
-
-        // computed
-        get filteredTires() {
-          const q = this.search.trim().toLowerCase();
-          const w = (this.filter.width || '').trim();
-          const a = (this.filter.aspect || '').trim();
-          const r = (this.filter.rim || '').trim();
-
-          let list = this.inventory.filter(t => {
-            const matchesSearch = !q || t.size.toLowerCase().includes(q) || t.brand.toLowerCase().includes(q) || (t.model || '').toLowerCase().includes(q) || (t.category || '').toLowerCase().includes(q);
-            const matchesCondition = this.filter.condition === 'all' || t.condition === this.filter.condition;
-            const matchesBrand = this.filter.brand === 'all' || t.brand === this.filter.brand;
-
-            const size = t.size.toUpperCase(); // e.g. 275/40R20
-            const matchW = !w || size.startsWith(w + '/');
-            const matchA = !a || size.includes('/' + a + 'R') || size.includes('/' + a + 'ZR') || size.includes('/' + a + ' ') || size.includes('/' + a + 'R');
-            const matchR = !r || size.endsWith('R' + r) || size.endsWith('ZR' + r) || size.endsWith(r);
-
-            return matchesSearch && matchesCondition && matchesBrand && matchW && matchA && matchR;
-          });
-
-          // sorting
-          if (this.sortBy === 'price_asc') list.sort((x,y) => x.price - y.price);
-          if (this.sortBy === 'price_desc') list.sort((x,y) => y.price - x.price);
-          if (this.sortBy === 'tread_desc') list.sort((x,y) => (y.treadPct ?? -1) - (x.treadPct ?? -1));
-
-          // simple relevance fallback: keep original order
-          return list;
-        },
-
-        // actions
-        toggleGrid(){ this.ui.compact = !this.ui.compact; },
-        scrollToInventory(){ document.querySelector('#inventory')?.scrollIntoView({ behavior: 'smooth' }); },
-
-        openDetails(tire){ this.modal.tire = tire; this.modal.open = true; },
-        openRequest(){ this.request.open = true; },
-        openAdmin(){ alert('Admin panel: in production, link this button to your secure admin login / dashboard.'); },
-
-        quickReserve(tire){
-          alert(`Reserved request created:\n\n${tire.brand} ${tire.model}\n${tire.size}\nPrice: ${this.formatPrice(tire.price)}\n\nCall (727) 223-4224 to confirm availability + schedule install.`);
-        },
-
-        applyQuickTag(tag){
-          const t = tag.toLowerCase();
-          if (t.includes('/')) {
-            // size tag like 275/40R20
-            const m = tag.toUpperCase().match(/^(\d{3})\/(\d{2})R(\d{2})$/);
-            if (m){ this.filter.width=m[1]; this.filter.aspect=m[2]; this.filter.rim=m[3]; this.search=''; return; }
-            this.search = tag;
-            return;
-          }
-          // category or brand
-          if (this.brands.includes(tag)) { this.filter.brand = tag; this.search=''; return; }
-          this.search = tag;
-        },
-
-        resetFilters(){
-          this.search = '';
-          this.filter = { condition: 'all', brand: 'all', width: '', aspect: '', rim: '' };
-          this.sortBy = 'relevance';
-        },
-
-        hasActiveFilters(){
-          return this.search.trim().length ||
-                 this.filter.condition !== 'all' ||
-                 this.filter.brand !== 'all' ||
-                 (this.filter.width || this.filter.aspect || this.filter.rim);
-        },
-
-        applyRequestedSize(){
-          if (this.request.width) this.filter.width = this.request.width.trim();
-          if (this.request.aspect) this.filter.aspect = this.request.aspect.trim();
-          if (this.request.rim) this.filter.rim = this.request.rim.trim();
-          if (this.request.brand) this.filter.brand = this.request.brand.trim();
-          if (this.request.condition === 'new' || this.request.condition === 'used') this.filter.condition = this.request.condition;
-          this.search = '';
-        },
-
-        // helpers
-        formatPrice(n){ if (n == null) return '$—'; return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n); },
-
-        buildTel(tire){
-          const msg = tire ? `Hi Speedy Tire — I’m calling about ${tire.brand} ${tire.model} ${tire.size}. Is it available today?` : 'Hi Speedy Tire — I’d like to confirm tire availability.';
-          return `tel:7272234224`;
-        },
-
-        buildRequestText(){
-          const size = [this.request.width, this.request.aspect, this.request.rim].filter(Boolean).join('/');
-          const cond = this.request.condition === 'either' ? 'new or used' : this.request.condition;
-          const brand = this.request.brand ? `Preferred brand: ${this.request.brand}. ` : '';
-          const notes = this.request.notes ? `Notes: ${this.request.notes}` : '';
-          const message = `Hi Speedy Tire — I’m looking for ${size ? size + ' (tire size)' : 'a tire size'}; condition: ${cond}. ${brand}${notes}`.trim();
-
-          // SMS link works on mobile; desktop will ignore, but fine for demo
-          return `sms:7272234224?&body=${encodeURIComponent(message)}`;
+    <script>
+        function tireStore() {
+            return {
+                search: '',
+                filterCondition: 'all',
+                inventory: [
+                    { id: 1, brand: 'Michelin', size: '275/40R20', price: 245, condition: 'new', image: 'https://images.unsplash.com/photo-1578844541663-b7395eaf8854?w=600' },
+                    { id: 2, brand: 'Pirelli', size: '245/35R19', price: 110, condition: 'used', tread: '9/32nd (90%)', image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600' },
+                    { id: 3, brand: 'Continental', size: '225/45R18', price: 85, condition: 'used', tread: '8/32nd (80%)', image: 'https://images.unsplash.com/photo-1551522435-a13afa10f103?w=600' },
+                    { id: 4, brand: 'Bridgestone', size: '255/50R20', price: 189, condition: 'new', image: 'https://images.unsplash.com/photo-1621259182978-f09e5e2ca1ff?w=600' },
+                    { id: 5, brand: 'Yokohama', size: '215/55R17', price: 65, condition: 'used', tread: '7/32nd (75%)', image: 'https://images.unsplash.com/photo-1578844541663-b7395eaf8854?w=600' },
+                    { id: 6, brand: 'Goodyear', size: '265/70R17', price: 155, condition: 'new', image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600' },
+                    { id: 7, brand: 'Hankook', size: '235/40R18', price: 95, condition: 'used', tread: '9/32nd (90%)', image: 'https://images.unsplash.com/photo-1551522435-a13afa10f103?w=600' },
+                    { id: 8, brand: 'Toyo', size: '285/45R22', price: 299, condition: 'new', image: 'https://images.unsplash.com/photo-1621259182978-f09e5e2ca1ff?w=600' }
+                ],
+                get filteredTires() {
+                    return this.inventory.filter(tire => {
+                        const matchesSearch = tire.size.toLowerCase().includes(this.search.toLowerCase()) || 
+                                              tire.brand.toLowerCase().includes(this.search.toLowerCase());
+                        const matchesCondition = this.filterCondition === 'all' || tire.condition === this.filterCondition;
+                        return matchesSearch && matchesCondition;
+                    });
+                },
+                openModal(tire) {
+                    alert(`Speedy Tire Inquiry:\n${tire.brand} - ${tire.size}\nPrice: $${tire.price}\n\nPlease call (727) 223-4224 to confirm availability at our Clearwater shop!`);
+                }
+            }
         }
-      };
-    }
-  </script>
+    </script>
 </body>
 </html>
